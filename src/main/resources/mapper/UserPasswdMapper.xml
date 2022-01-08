@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootchatroom.code.mapper.UserPasswdMapper">
     <insert id="insertUserPassword">
-        Insert INTO `user_passwd`
+        INSERT INTO `user_passwd`
         VALUES (#{id},#{password},0);
     </insert>
 
@@ -19,7 +19,7 @@
         LEFT JOIN `user` AS b
         ON a.`id` = b.`id`
         WHERE b.`name` = #{username}
-        AND a.passwd = #{password}
+        AND a.`passwd` = #{password}
     </select>
 
 </mapper>
