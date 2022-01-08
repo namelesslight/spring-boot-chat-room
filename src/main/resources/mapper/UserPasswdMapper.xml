@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbootchatroom.code.mapper.UserPasswdMapper">
+    <insert id="insertUserPassword">
+        Insert INTO `user_passwd`
+        VALUES (#{id},#{password},0);
+    </insert>
+
+    <update id="updateUserPassword">
+        UPDATE `user_passwd`
+        SET `passwd` = #{newPassword}
+        WHERE `id` = #{id}
+        AND `is_delete` = 0
+    </update>
+
+    <select id="queryUserCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM `user_passwd` AS a
+        LEFT JOIN `user` AS b
+        ON a.`id` = b.`id`
+        WHERE b.`name` = #{username}
+        AND a.passwd = #{password}
+    </select>
+
+</mapper>
