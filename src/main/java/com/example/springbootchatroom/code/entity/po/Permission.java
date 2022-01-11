@@ -33,6 +33,11 @@ public class Permission implements Serializable {
     private String permission;
 
     /**
+     * 权限对应的角色
+     */
+    private String role;
+
+    /**
      * 逻辑删除
      */
     private Boolean isDelete;

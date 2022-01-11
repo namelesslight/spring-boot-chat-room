@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootchatroom.code.mapper.PermissionMapper">
 
+    <select id="listPermissionByRole" resultType="java.lang.String">
+        SELECT
+               `permission`
+        FROM `permission`
+        WHERE `role` = #{role}
+        AND `is_delete` = 0
+    </select>
+
 </mapper>

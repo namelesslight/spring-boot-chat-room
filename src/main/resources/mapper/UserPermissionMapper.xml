@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootchatroom.code.mapper.UserPermissionMapper">
+    <insert id="addPermission">
+        INSERT INTO `user_permission` VALUES (#{userId},#{permission},0);
+    </insert>
 
+    <update id="deletePermission">
+        UPDATE `user_permission`
+        SET `is_delete` = 1
+        WHERE id = #{userId}
+         AND `permission` = #{permission}
+         AND  `is_delete` = 0
+    </update>
+
+    <update id="recoverPermission">
+        UPDATE `user_permission`
+        SET `is_delete` = 0
+        WHERE id = #{userId}
+          AND `permission` = #{permission}
+          AND  `is_delete` = 1
+    </update>
+
+    <select id="listPermissionByUserId" resultType="java.lang.String">
+        SELECT
+               `permission`
+        FROM `user_permission`
+        WHERE `id` = #{userId}
+        AND `is_delete` = 0
+    </select>
 </mapper>

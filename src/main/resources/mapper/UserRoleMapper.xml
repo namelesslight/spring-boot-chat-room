@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootchatroom.code.mapper.UserRoleMapper">
+    <insert id="addRole">
+        INSERT INTO `user_role` VALUES (#{userId},#{role},0);
+    </insert>
 
+    <update id="deleteRole">
+        UPDATE `user_role`
+        SET `is_delete` = 1
+        WHERE id = #{userId}
+          AND `role` = #{role}
+          AND  `is_delete` = 0
+    </update>
+
+    <update id="recoverRole">
+        UPDATE `user_role`
+        SET `is_delete` = 0
+        WHERE id = #{userId}
+          AND `role` = #{role}
+          AND  `is_delete` = 1
+    </update>
+
+    <select id="listRoleByUserId" resultType="java.lang.String">
+        SELECT
+            `role`
+        FROM `user_role`
+        WHERE `id` = #{userId}
+        AND `is_delete` = 0
+    </select>
 </mapper>
