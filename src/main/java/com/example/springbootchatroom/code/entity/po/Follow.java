@@ -28,10 +28,14 @@ public class Follow implements Serializable {
     private String id;
 
     /**
-     * 关注你的人的编号
+     * 用户的编号
      */
     private String user;
 
+    /**
+     * 关注该用户的人的编号
+     */
+    private String follower;
     /**
      * 逻辑删除
      */

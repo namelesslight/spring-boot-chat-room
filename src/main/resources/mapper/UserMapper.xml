@@ -29,7 +29,10 @@
 
     <select id="queryOneUserById" resultType="com.example.springbootchatroom.code.entity.po.User">
         SELECT
-               a.`id`,a.`name`,b.`path`,a.`is_delete`
+            a.`id` AS `id`,
+            a.`name` AS `name`,
+            b.`path` AS `image`,
+            a.`is_delete` AS `is_delete`
         FROM `user` AS a
         LEFT JOIN `image` AS b
         ON a.`image` = b.`id`
@@ -39,15 +42,23 @@
 
     <select id="queryOneUserByUsername" resultType="com.example.springbootchatroom.code.entity.po.User">
         SELECT
-               `id`,`name`,`image`,`is_delete`
-        FROM `user`
-        WHERE `name` = #{username}
-        AND `is_delete` = 0
+            a.`id` AS `id`,
+            a.`name` AS `name`,
+            b.`path` AS `image`,
+            a.`is_delete` AS `is_delete`
+        FROM `user` AS a
+        LEFT JOIN `image` AS b
+        ON a.`image` = b.`id`
+        WHERE a.`name` = #{username}
+        AND a.`is_delete` = 0
     </select>
 
     <select id="listUserByPage" resultType="com.example.springbootchatroom.code.entity.po.User">
         SELECT
-               a.`id`,a.`name`,b.`path`,a.`is_delete`
+            a.`id` AS `id`,
+            a.`name` AS `name`,
+            b.`path` AS `image`,
+            a.`is_delete` AS `is_delete`
         FROM `user` AS a
         LEFT JOIN `image` AS b
         ON a.`image` = b.`id`

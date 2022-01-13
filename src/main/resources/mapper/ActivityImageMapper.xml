@@ -2,4 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootchatroom.code.mapper.ActivityImageMapper">
 
+    <insert id="addActivityImage">
+        INSERT INTO `activity_image`
+        VALUES (#{activityId},#{imageId},0);
+    </insert>
+
+    <delete id="deleteImage">
+        DELETE FROM `activity_image`
+        WHERE `id` = #{activityId}
+          AND `image` = #{imageId}
+    </delete>
+
+    <select id="listImageByActivity" resultType="com.example.springbootchatroom.code.entity.po.Activity">
+        SELECT
+               b.`path` AS `image`
+        FROM `activity_image` AS a
+        LEFT JOIN `image` AS b
+        ON a.`image` = b.`id`
+        WHERE `id` = #{activityId}
+    </select>
+
 </mapper>

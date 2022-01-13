@@ -1,5 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootchatroom.code.mapper.ActivityMapper">
+    <insert id="addActivity">
+        INSERT INTO `activity`
+        VALUES (#{activityId},#{content},#{userId},NOW(),0)
+    </insert>
 
+    <update id="logicalDeleteActivity">
+        UPDATE `activity`
+        SET `is_delete` = 1
+        WHERE `id` = #{activityId}
+        AND `is_delete` = 0
+    </update>
+
+    <delete id="physicalDeleteActivity">
+        DELETE FROM  `activity`
+        WHERE `id` = #{activityId}
+        AND  `is_delete` = 1
+    </delete>
+
+    <update id="recoverActivity">
+        UPDATE `activity`
+        SET `is_delete` = 0
+        WHERE `id` = #{activityId}
+          AND `is_delete` = 1
+    </update>
+
+    <update id="updateActivity">
+        UPDATE `activity`
+        SET
+            `content` = 0,
+            `send_date` = NOW()
+        WHERE `id` = #{activityId}
+          AND `is_delete` = 0
+    </update>
+
+    <select id="listActivityByUser" resultType="com.example.springbootchatroom.code.entity.po.Activity">
+        SELECT
+               `id`,`activity`,`user`,`send_date`,`is_delete`
+        FROM `activity`
+        WHERE `user` = #{userId}
+        AND  `is_delete` = 0
+        ORDER BY `send_date` DESC
+        LIMIT #{start},#{size}
+    </select>
+
+    <select id="listDeleteActivityByUser" resultType="com.example.springbootchatroom.code.entity.po.Activity">
+        SELECT
+            `id`,`activity`,`user`,`send_date`,`is_delete`
+        FROM `activity`
+        WHERE `user` = #{userId}
+          AND  `is_delete` = 1
+        ORDER BY `send_date` DESC
+            LIMIT #{start},#{size}
+    </select>
+
+    <select id="listActivityByTime" resultType="com.example.springbootchatroom.code.entity.po.Activity">
+        SELECT
+            `id`,`activity`,`user`,`send_date`,`is_delete`
+        FROM `activity`
+        WHERE `is_delete` = 0
+        ORDER BY `send_date` DESC
+            LIMIT #{start},#{size}
+    </select>
 </mapper>

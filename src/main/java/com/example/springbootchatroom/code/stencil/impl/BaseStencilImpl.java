@@ -1,24 +1,22 @@
 package com.example.springbootchatroom.code.stencil.impl;
 
-import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import com.example.springbootchatroom.code.entity.po.User;
+import com.example.springbootchatroom.code.entity.vo.UserInfo;
 import com.example.springbootchatroom.code.exception.RegisterException;
 import com.example.springbootchatroom.code.result.Result;
 import com.example.springbootchatroom.code.service.*;
 import com.example.springbootchatroom.code.stencil.BaseStencil;
-import com.example.springbootchatroom.code.util.ImageUtil;
-import com.example.springbootchatroom.code.util.JWTUtil;
-import com.example.springbootchatroom.code.util.SecretUtil;
-import com.example.springbootchatroom.code.util.UUIDUtil;
+import com.example.springbootchatroom.code.util.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 基础通用模板实体类
@@ -102,10 +100,16 @@ public class BaseStencilImpl implements BaseStencil {
         String secretPassword = SecretUtil.secretString(password);
         if (userPasswdService.queryUserCount(username,secretPassword)){
             Map<String,String> tokenClaims = new HashMap<>();
+            User user = userService.queryOneUserByUsername(username);
+            List<String> roles = userRoleService.listRoleByUserId(user.getId());
+            List<String> permissions = userPermissionService.listPermissionByUserId(user.getId());
+            UserInfo userInfo = new UserInfo(user,roles,permissions);
             tokenClaims.put("username",username);
-            tokenClaims.put("id",userService.queryOneUserByUsername(username).getId());
+            tokenClaims.put("id",user.getId());
             String token = JWTUtil.createToken(tokenClaims);
+            RedisUtil.save(token,userInfo,7L, TimeUnit.DAYS);
             result.put("info","login_success");
+            result.put("userInfo",userInfo);
             result.put("token",token);
         } else {
             result.put("info","login_fail");
