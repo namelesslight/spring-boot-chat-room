@@ -40,7 +40,7 @@ public interface ImageMapper extends BaseMapper<Image> {
      * @param imagePath 图片路径
      * @return java.lang.Integer
      */
-    public Integer updateImage(String imageId,String imageName,String imagePath);
+    public Integer updateImage(String imageId, String imageName, String imagePath);
 
     /**
      * 列出全部已删除图片

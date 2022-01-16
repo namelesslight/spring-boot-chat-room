@@ -1,5 +1,7 @@
 package com.example.springbootchatroom.code.stencil.impl;
 
+import com.example.springbootchatroom.code.entity.bean.PageBean;
+import com.example.springbootchatroom.code.entity.po.Activity;
 import com.example.springbootchatroom.code.entity.po.User;
 import com.example.springbootchatroom.code.entity.vo.UserInfo;
 import com.example.springbootchatroom.code.exception.RegisterException;
@@ -19,7 +21,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 基础通用模板实体类
+ * 用户通用模板实体类
  * @author ZCL
  * @since 2022/1/8
  */
@@ -43,6 +45,12 @@ public class BaseStencilImpl implements BaseStencil {
 
     @Resource
     private IImageService imageService;
+
+    @Resource
+    private IActivityService activityService;
+
+    @Resource
+    private IFollowService followService;
 
     /**
      * 注册
@@ -145,4 +153,106 @@ public class BaseStencilImpl implements BaseStencil {
         return new Result().result200(result,url);
     }
 
+    /**
+     * 通过用户查询动态
+     * @param userId 用户id
+     * @param currentPage 当前页数
+     * @param size 查询数量
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    @Override
+    public Result listActivityByUser(String userId, Integer currentPage, Integer size, String url) {
+        Integer totalCount = activityService.queryActivityCountByUser(userId);
+        Integer totalPage = PageBean.getTotalPage(size,totalCount);
+        Integer start = (currentPage - 1) * size;
+        List<Activity> activities = activityService.listActivityByUser(userId,start,size);
+        PageBean<Activity> pageBean = new PageBean<>(totalCount, currentPage, totalPage, start, activities);
+        Map<String,Object> result = new HashMap<>();
+        result.put("result",pageBean);
+        return new Result().result200(result, url);
+    }
+
+    /**
+     * 通过时间查询动态
+     * @param currentPage 当前页数
+     * @param size 查询数量
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    @Override
+    public Result listActivityByTime(Integer currentPage, Integer size, String url) {
+        Integer totalCount = activityService.queryAllActivityCount();
+        Integer totalPage = PageBean.getTotalPage(size,totalCount);
+        Integer start = (currentPage - 1) * size;
+        List<Activity> activities = activityService.listActivityByTime(start,size);
+        PageBean<Activity> pageBean = new PageBean<>(totalCount, currentPage, totalPage, start, activities);
+        Map<String,Object> result = new HashMap<>();
+        result.put("result",pageBean);
+        return new Result().result200(result, url);
+    }
+
+    /**
+     * 查询关注该用户的人的数量
+     * @param userId 用户id
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    @Override
+    public Result queryFollowerCountByUserId(String userId, String url) {
+        Map<String,Object> result = new HashMap<>();
+        Integer followersCount = followService.queryFollowerCountByUserId(userId);
+        Map<String ,Object> followersMap = new HashMap<>();
+        followersMap.put("followersCount",followersCount);
+        result.put("info",followersMap);
+        return new Result().result200(result,url);
+    }
+
+    /**
+     * 查询关注该用户的人
+     * @param userId 用户id
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    @Override
+    public Result listFollower(String userId, String url) {
+        Map<String,Object> result = new HashMap<>();
+        List<User> followers = followService.listFollower(userId);
+        Map<String ,Object> followersMap = new HashMap<>();
+        followersMap.put("followers",followers);
+        result.put("info",followersMap);
+        return new Result().result200(result,url);
+    }
+
+    /**
+     * 查询该用户关注的人的人数
+     * @param userId 用户id
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    @Override
+    public Result queryFollowingCountByUserId(String userId, String url) {
+        Map<String,Object> result = new HashMap<>();
+        Integer followingCount = followService.queryFollowingCountByUserId(userId);
+        Map<String ,Object> followingMap = new HashMap<>();
+        followingMap.put("followingMap",followingCount);
+        result.put("info",followingMap);
+        return new Result().result200(result,url);
+    }
+
+    /**
+     * 查询该用户关注的人
+     * @param userId 用户id
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    @Override
+    public Result listFollowing(String userId, String url) {
+        Map<String,Object> result = new HashMap<>();
+        List<User> following = followService.listFollowing(userId);
+        Map<String ,Object> followingMap = new HashMap<>();
+        followingMap.put("followers",following);
+        result.put("info",followingMap);
+        return new Result().result200(result,url);
+    }
 }

@@ -38,4 +38,13 @@ public interface UserPasswdMapper extends BaseMapper<UserPasswd> {
      * @return java.lang.Integer
      */
     public Integer queryUserCount(String username,String password);
+
+
+    /**
+     * 根据用户id和密码查询用户
+     * @param id 用户名
+     * @param password 密码
+     * @return java.lang.Integer
+     */
+    public Integer queryUserCountById(String id, String password);
 }

@@ -2,4 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootchatroom.code.mapper.FollowMapper">
 
+    <insert id="addFollow">
+        INSERT INTO
+            `follow`
+        VALUES (#{followId},#{userId},#{followerId},0);
+    </insert>
+
+    <delete id="deleteFollow">
+        DELETE FROM
+            `follow`
+        WHERE `user` = #{userId}
+        AND `follower` = #{followerId}
+    </delete>
+
+    <select id="queryFollowerCountByUserId" resultType="java.lang.Integer">
+        SELECT
+               COUNT(*)
+        FROM `follow`
+        WHERE `user` = #{userId}
+    </select>
+
+    <select id="listFollower" resultType="com.example.springbootchatroom.code.entity.po.User">
+        SELECT
+               `result`.`id` AS `id`,
+               `result`.`name` AS `name`,
+               `c`.`path` AS `image`,
+               `result`.`is_delete` AS `is_delete`
+        FROM
+            (SELECT
+                 `b`.`id` as `id`,
+                 `b`.`name` as `name`,
+                 `b`.`image` as `image`,
+                 `b`.`is_delete` as `is_delete`
+             FROM `follow` AS `a`
+                      RIGHT JOIN `user` AS `b`
+                                 ON `a`.`user` = `b`.`id`
+             where a.`user` = #{userId}) AS `result`
+        LEFT JOIN `image` AS `c`
+        ON `result`.`image` = `c`.`id`
+    </select>
 </mapper>

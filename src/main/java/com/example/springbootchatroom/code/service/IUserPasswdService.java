@@ -18,7 +18,7 @@ public interface IUserPasswdService extends IService<UserPasswd> {
      * @param password 用户密码
      * @return java.lang.Boolean
      */
-    public Boolean insertUserPassword(String id,String password);
+    public Boolean insertUserPassword(String id, String password);
 
     /**
      * 修改用户密码
@@ -26,7 +26,7 @@ public interface IUserPasswdService extends IService<UserPasswd> {
      * @param newPassword 用户新密码
      * @return java.lang.Boolean
      */
-    public Boolean updateUserPassword(String id,String newPassword);
+    public Boolean updateUserPassword(String id, String newPassword);
 
     /**
      * 通过用户名和密码查询用户
@@ -34,5 +34,13 @@ public interface IUserPasswdService extends IService<UserPasswd> {
      * @param password 密码
      * @return java.lang.Boolean
      */
-    public Boolean queryUserCount(String username,String password);
+    public Boolean queryUserCount(String username, String password);
+
+    /**
+     * 根据用户id和密码查询用户
+     * @param id 用户名
+     * @param password 密码
+     * @return java.lang.Boolean
+     */
+    public Boolean queryUserCountById(String id, String password);
 }

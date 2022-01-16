@@ -35,6 +35,14 @@
           AND `is_delete` = 0
     </update>
 
+    <select id="queryActivityCountByUser" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM `activity`
+        WHERE `user` = #{userId}
+        AND `is_delete` = 0
+    </select>
+
     <select id="listActivityByUser" resultType="com.example.springbootchatroom.code.entity.po.Activity">
         SELECT
                `id`,`activity`,`user`,`send_date`,`is_delete`
@@ -45,6 +53,14 @@
         LIMIT #{start},#{size}
     </select>
 
+    <select id="queryDeleteActivityCountByUser" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM `activity`
+        WHERE `user` = #{userId}
+          AND `is_delete` = 1
+    </select>
+
     <select id="listDeleteActivityByUser" resultType="com.example.springbootchatroom.code.entity.po.Activity">
         SELECT
             `id`,`activity`,`user`,`send_date`,`is_delete`
@@ -53,6 +69,13 @@
           AND  `is_delete` = 1
         ORDER BY `send_date` DESC
             LIMIT #{start},#{size}
+    </select>
+
+    <select id="queryAllActivityCount" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM `activity`
+        WHERE  `is_delete` = 0
     </select>
 
     <select id="listActivityByTime" resultType="com.example.springbootchatroom.code.entity.po.Activity">

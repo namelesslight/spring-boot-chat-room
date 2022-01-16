@@ -22,4 +22,10 @@
         AND a.`passwd` = #{password}
     </select>
 
+    <select id="queryUserCountById" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM `user_passwd`
+        WHERE `id` = #{id}
+        AND `passwd` = #{password}
+    </select>
 </mapper>

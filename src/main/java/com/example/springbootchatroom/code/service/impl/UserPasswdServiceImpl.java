@@ -54,4 +54,15 @@ public class UserPasswdServiceImpl extends ServiceImpl<UserPasswdMapper, UserPas
     public Boolean queryUserCount(String username, String password) {
         return userPasswdMapper.queryUserCount(username,password) == 1;
     }
+
+    /**
+     * 根据用户id和密码查询用户
+     * @param id 用户名
+     * @param password 密码
+     * @return java.lang.Boolean
+     */
+    @Override
+    public Boolean queryUserCountById(String id, String password) {
+        return userPasswdMapper.queryUserCountById(id, password) == 1;
+    }
 }

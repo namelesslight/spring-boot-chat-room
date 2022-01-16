@@ -21,20 +21,27 @@ public interface FollowMapper extends BaseMapper<Follow> {
 
     /**
      * 添加关注
-     * @param id 关注编号
+     * @param followId 关注编号
      * @param userId 要关注的人的id
-     * @param followId 关注者的id
-     * @return
+     * @param followerId 关注者的id
+     * @return java.lang.Integer
      */
-    public Integer addFollow(String id,String userId,String followId);
+    public Integer addFollow(String followId,String userId,String followerId);
 
     /**
      * 取消关注
      * @param userId 用户id
-     * @param FollowerId 正在关注的人的id
+     * @param followerId 正在关注的人的id
      * @return java.lang.Integer
      */
-    public Integer deleteFollow(String userId,String FollowerId);
+    public Integer deleteFollow(String userId,String followerId);
+
+    /**
+     * 根据用户的id查询关注他的人的人数
+     * @param userId 用户id
+     * @return java.lang.Integer
+     */
+    public Integer queryFollowerCountByUserId(String userId);
 
     /**
      * 根据用户的id查询关注他的人
@@ -44,12 +51,16 @@ public interface FollowMapper extends BaseMapper<Follow> {
     public List<User> listFollower(String userId);
 
     /**
+     * 根据用户id查询他关注的人的人数
+     * @param userId 用户id
+     * @return java.lang.Integer
+     */
+    public Integer queryFollowingCountByUserId(String userId);
+
+    /**
      * 根据用户id查询他关注的人
      * @param userId 用户id
      * @return java.util.List
      */
     public List<User> listFollowing(String userId);
-
-
-
 }

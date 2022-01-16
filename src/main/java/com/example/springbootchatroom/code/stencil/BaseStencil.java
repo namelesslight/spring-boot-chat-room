@@ -31,7 +31,6 @@ public interface BaseStencil {
      */
     public Result login(String username,String password, String url);
 
-
     /**
      * 下载图片
      * @param imageFile 图片文件
@@ -41,4 +40,55 @@ public interface BaseStencil {
      * @return com.example.springbootchatroom.code.result.Result
      */
     public Result imageDownload(MultipartFile imageFile,String imagePath,String imageName,String url);
+
+    /**
+     * 通过用户查询动态
+     * @param userId 用户id
+     * @param currentPage 当前页数
+     * @param size 查询数量
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    public Result listActivityByUser(String userId, Integer currentPage, Integer size,String url);
+
+    /**
+     * 通过时间查询动态
+     * @param currentPage 当前页数
+     * @param size 查询数量
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    public Result listActivityByTime(Integer currentPage, Integer size,String url);
+
+    /**
+     * 查询关注该用户的人的数量
+     * @param userId 用户id
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    public Result queryFollowerCountByUserId(String userId, String url);
+
+    /**
+     * 查询关注该用户的人
+     * @param userId 用户id
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    public Result listFollower(String userId, String url);
+
+    /**
+     * 查询该用户关注的人的人数
+     * @param userId 用户id
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    public Result queryFollowingCountByUserId(String userId, String url);
+
+    /**
+     * 查询该用户关注的人
+     * @param userId 用户id
+     * @param url url路径
+     * @return com.example.springbootchatroom.code.result.Result
+     */
+    public Result listFollowing(String userId,String url);
 }

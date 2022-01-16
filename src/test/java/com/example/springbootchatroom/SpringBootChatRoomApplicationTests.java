@@ -1,5 +1,6 @@
 package com.example.springbootchatroom;
 
+import com.example.springbootchatroom.code.entity.bean.PageBean;
 import com.example.springbootchatroom.code.entity.po.User;
 import com.example.springbootchatroom.code.exception.RegisterException;
 import com.example.springbootchatroom.code.mapper.UserMapper;
@@ -75,5 +76,10 @@ class SpringBootChatRoomApplicationTests {
 //        RedisUtil.save("second",new User("a","b","c",false),7L, TimeUnit.DAYS);
         User user = (User) RedisUtil.getValue("second");
         System.out.println(user);
+    }
+
+    @Test
+    void load5(){
+        System.out.println(PageBean.getTotalPage(10,25));
     }
 }

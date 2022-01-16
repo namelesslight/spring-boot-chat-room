@@ -15,4 +15,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChatLogMapper extends BaseMapper<ChatLog> {
 
+    /**
+     * 添加聊天记录
+     * @param logId
+     * @param userId
+     * @param path
+     * @return
+     */
+    public Integer addLog(String logId,String userId,String path);
+
+    /**
+     * 通过用户id获取聊天记录路径
+     * @return
+     */
+    public String getLogByUserId();
 }
